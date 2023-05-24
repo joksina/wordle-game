@@ -38,6 +38,39 @@ function App() {
     }, [termsValidation]);
 
 
+    function saveBoardProgress(board) {
+        localStorage.setItem("wordleBoardProgress", JSON.stringify(board));
+    }
+
+    function boardProgress(board) {
+        if(localStorage.getItem("wordleBoardProgress") === null) {
+            saveBoardProgress(board);
+        }
+        return JSON.parse(localStorage.getItem("wordleBoardProgress"));
+    }
+
+    function getWordleRowProgress() {
+        if(localStorage.getItem("currentRowProgress") === null) {
+            localStorage.setItem("currentRowProgress", JSON.stringify(1));
+        }
+        return JSON.parse(localStorage.getItem("currentRowProgress"));
+    }
+
+    function changeRowProgress(row) {
+        localStorage.setItem("currentRowProgress", JSON.stringify(row));
+    }
+
+    function wordleCurrentDate() {
+        if(localStorage.getItem("currentDate") === null) {
+            localStorage.setItem("currentDate", JSON.stringify({}));
+        }
+        return JSON.parse(localStorage.getItem("currentDate"));
+    }
+
+    function setCurrentDate(date) {
+        localStorage.setItem("currentDate", JSON.stringify(date));
+    }
+
     function getQuerySelectorforGrid(arg) {
         return document.querySelectorAll("[aria-label='" + currentRow + ":" + arg + "']")[0].value;
     }
@@ -163,12 +196,7 @@ function App() {
         if(currentRow <= MAX_ROW){
             currentRow = getWordleRowProgress();
             if(event.key === "Backspace") {
-                if(currentCell != 0){
-                    currentCell--;
-                    document.querySelectorAll("[aria-label='" + currentRow + ":" + (currentCell +1) + "']")[0].focus();
-                } else {
-                    document.querySelectorAll("[aria-label='" + currentRow + ":" + 1 + "']")[0].focus();
-                }
+                
             } else if(event.key === "Enter") {
                 handleSubmit();
             } else {
