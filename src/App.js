@@ -209,7 +209,6 @@ function App() {
             } else if(event.key === "Enter") {
                 handleSubmit();
             } else {
-                console.log("here i am", event)
                 if(currentCell !== MAX_WORD) {
                     currentCell++;
                     document.querySelectorAll("[aria-label='" + currentRow + ":" + currentCell+ "']")[0].focus();
