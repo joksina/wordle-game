@@ -136,7 +136,7 @@ function App() {
             handleStatus();
             if (guessedWord.length === MAX_WORD) {
                 if (guessedWord === word) {
-                    for(var i = 1; i <= MAX_WORD; i++){
+                    for(var i = 1; i <= MAX_ROW; i++){
                         disableNextRow(i);
                     }
                     localStorage.setItem("wordleGameState", JSON.stringify(true));
@@ -192,15 +192,25 @@ function App() {
         saveBoardProgress(boardGuesses);
     }
 
+    function handleDelete() {
+        if(currentCell !== 0){
+            currentCell--;
+            document.querySelectorAll("[aria-label='" + currentRow + ":" + (currentCell +1) + "']")[0].focus();
+        } else {
+            document.querySelectorAll("[aria-label='" + currentRow + ":" + 1 + "']")[0].focus();
+        }
+    }
+
     const handleKeyDown = useCallback(event => {
         if(currentRow <= MAX_ROW){
             currentRow = getWordleRowProgress();
             if(event.key === "Backspace") {
-                
+                handleDelete();
             } else if(event.key === "Enter") {
                 handleSubmit();
             } else {
-                if(currentCell != MAX_WORD) {
+                console.log("here i am", event)
+                if(currentCell !== MAX_WORD) {
                     currentCell++;
                     document.querySelectorAll("[aria-label='" + currentRow + ":" + currentCell+ "']")[0].focus();
                 }
