@@ -17,8 +17,8 @@ const Qwerty = ({letters}) => {
     }
 
     return (
-        <div className="letter-wrapper">
-            <div className="letter-buttons">
+        <div className="wordle-wrapper-keyboard">
+            <div className="wordle-keyboard">
                 {letters.map(letter => {
                     if(letter.letter !== undefined){
                     return(

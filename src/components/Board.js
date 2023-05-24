@@ -42,12 +42,12 @@ const Board = ({inputs}) => {
                     arrangeBoard()
                     return(
                         <React.Fragment key={idx}>
-                            <li className={"row" + block.row}>
+                            <li className={`row ${block.row}`}>
                                 <input id={setClassName(block)}
                                    aria-label={block.position}
                                    type="text"
                                    maxLength={1}
-                                   className={"wordle-guess"}
+                                   className={"wordle-grid"}
                                    defaultValue={block.val}
                                    disabled={!!block.frozen}
                                    onChange={handleOnchange} />
