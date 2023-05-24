@@ -46,6 +46,7 @@ const Board = ({inputs}) => {
                                 <input id={setClassName(block)}
                                    aria-label={block.position}
                                    type="text"
+                                   maxLength={1}
                                    className={"wordle-guess"}
                                    defaultValue={block.val}
                                    disabled={!!block.frozen}
