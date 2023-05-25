@@ -65,26 +65,16 @@ li {
     background-color: #538d4e;
 }
 
-#wordle-board-green {
-    background-color: #538d4e;
-    animation:flipinx 1s ease 0s 1 normal;
-}
-
 .wordle-yellow {
     background-color: #b59f3b;
 }
 
-#wordle-board-yellow {
-    background-color: #b59f3b;
-    animation:flipinx 1s ease 0s 1 normal;
-}
-
 .wordle-gray {
-    background-color: #565758;
+    background-color: #3a3a3c;
 }
 
-#wordle-board-gray {
-    background-color: #565758;
+
+#wordle-flip {
     animation:flipinx 1s ease 0s 1 normal;
 }
 

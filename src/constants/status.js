@@ -1,8 +1,7 @@
 const STATUS = {
-    UNKNOWN: 'UNKOWN',
-    FOUND: 'FOUND',
+    CORRECT: 'CORRECT',
     CONTAINS: 'CONTAINS',
-    BAD: 'BAD',
+    INCORRECT: 'INCORRECT',
 };
 
 export default STATUS;

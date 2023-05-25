@@ -1,5 +1,7 @@
 import React from "react";
 import STATUS from '../constants/status';
+import { setClassName } from '../helper/helper.js';
+
 
 
 const Board = ({inputs}) => {
@@ -18,21 +20,20 @@ const Board = ({inputs}) => {
         }
     }
 
-    const setClassName = (box) => {
-        if(box.status === STATUS.FOUND) {
-            return 'wordle-board-green';
-        } else if (box.status === STATUS.CONTAINS) {
-            return 'wordle-board-yellow';
-        } else if (box.status === STATUS.BAD) {
-            return 'wordle-board-gray';
-        } else {
-            return "";
+    const setAnimationID = (grid) => {
+        if (grid.status) {
+            return "wordle-flip"
         }
     }
 
     const handleOnchange = (e) => {
-        let value = e.target.value;
-        e.target.value = value.toLowerCase();
+        let key = e.keyCode
+        if (((key >= 65 && key <= 90) || key == 8)) {
+            let value = e.target.value;
+            e.target.value = value.toLowerCase();
+        } else {
+            e.preventDefault();
+        }
     }
 
     return (
@@ -43,11 +44,11 @@ const Board = ({inputs}) => {
                     return(
                         <React.Fragment key={idx}>
                             <li className={`row ${block.row}`}>
-                                <input id={setClassName(block)}
+                                <input id={setAnimationID(block)}
                                    aria-label={block.position}
                                    type="text"
                                    maxLength={1}
-                                   className={"wordle-grid"}
+                                   className={`wordle-grid ${setClassName(block)}`}
                                    defaultValue={block.val}
                                    disabled={!!block.frozen}
                                    onChange={handleOnchange} />

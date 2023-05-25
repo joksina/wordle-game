@@ -1,20 +1,10 @@
 import React from "react";
 import STATUS from '../constants/status';
+import { setClassName } from '../helper/helper.js';
+
 
 
 const Qwerty = ({letters}) => {
-
-    const setClassName = (letter) => {
-        if(letter.status === STATUS.FOUND) {
-            return 'wordle-green';
-        } else if (letter.status === STATUS.CONTAINS) {
-            return 'wordle-yellow';
-        } else if (letter.status === STATUS.BAD) {
-            return 'wordle-gray';
-        } else {
-            return "";
-        }
-    }
 
     return (
         <div className="wordle-wrapper-keyboard">

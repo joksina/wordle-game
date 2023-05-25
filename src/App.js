@@ -8,9 +8,9 @@ import STATUS from './constants/status';
 
 function App() {
     const [word, setWord] = useState('');
-    const [guesses, setCurrentGuess] = useState(null);
+    const [guesses, setCurrentGuess] = useState('');
     const [boardGuesses, setBoardGuesses] = useState([]);
-    const [termsValidation, setTermsValidation] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
     const [gameState, setGame] = useState(false);
     let currentRow = getWordleRowProgress();
     let currentCell = 0;
@@ -31,11 +31,11 @@ function App() {
 
     useEffect(() => {
         if (!guesses) {
-            setTermsValidation(true);
+            setIsCorrect(true);
         } else {
-            setTermsValidation(false);
+            setIsCorrect(false);
         }
-    }, [termsValidation]);
+    }, [isCorrect]);
 
 
     function saveBoardProgress(board) {
@@ -98,14 +98,14 @@ function App() {
 
         for (let i = 0; i < guess.length; i++) {
             if(guess[i] === word[i]) {
-                setBoardLetters(guess[i].toLowerCase(), STATUS.FOUND);
+                setBoardLetters(guess[i].toLowerCase(), STATUS.CORRECT);
             } else if(word.includes(guess[i])) {
                 let index = guesses.findIndex((obj) => obj.letter === guess[i]);
-                if(guesses[index].status !== STATUS.FOUND){
+                if(guesses[index].status !== STATUS.CORRECT){
                     setBoardLetters(guess[i].toLowerCase(), STATUS.CONTAINS);
                 }
             } else {
-                setBoardLetters(guess[i].toLowerCase(), STATUS.BAD);
+                setBoardLetters(guess[i].toLowerCase(), STATUS.INCORRECT);
             }
         }
         localStorage.setItem("wordleProgress", JSON.stringify(guesses));
@@ -113,7 +113,7 @@ function App() {
 
     const getAlphabets = () => {
         let result = [];
-        const status = STATUS.UNKNOWN;
+        const status = "";
         let id = 0;
         if (!localStorage.getItem("wordleProgress")) {
             alphabet.map((letter) => {
@@ -132,6 +132,11 @@ function App() {
         for(var i = 1; i <= MAX_WORD; i++){
             guessedWord += getQuerySelectorforGrid(i);
         }
+
+        if (guessedWord.length !== MAX_WORD) {
+            alert("Not enough words!");
+        }
+
         if (words.includes(guessedWord)) {
             handleStatus();
             if (guessedWord.length === MAX_WORD) {
@@ -147,8 +152,6 @@ function App() {
                         alert("Try again tomorrow. Correct Word is " + word);
                     }
                 }
-            } else {
-                alert("Not enough words!");
             }
             currentRow++;
             changeRowProgress(currentRow);
@@ -165,13 +168,13 @@ function App() {
         for(var i = 0; i < word.length; i++){
             var index = boardGuesses.findIndex((letter) => letter.row === currentRow && letter.column === statusIndex);
             if(word[i] === getQuerySelectorforGrid(statusIndex)){
-                boardGuesses[index].status = STATUS.FOUND;
+                boardGuesses[index].status = STATUS.CORRECT;
             }else if(word.includes(getQuerySelectorforGrid(statusIndex))){
                 boardGuesses[index].status = STATUS.CONTAINS;
             }
 
-            if(boardGuesses[index].status !== STATUS.FOUND && boardGuesses[index].status !== STATUS.CONTAINS){
-                boardGuesses[index].status = STATUS.BAD;
+            if(boardGuesses[index].status !== STATUS.CORRECT && boardGuesses[index].status !== STATUS.CONTAINS){
+                boardGuesses[index].status = STATUS.INCORRECT;
             }
             statusIndex++;
         }
@@ -215,7 +218,7 @@ function App() {
                 }
             }
         }
-    }, [termsValidation]);
+    }, [isCorrect]);
 
     useEffect(() => {
         let today = new Date();
@@ -254,7 +257,7 @@ function App() {
                     "row": i,
                     "column": j,
                     "fozen": false,
-                    "status": STATUS.UNKNOWN
+                    "status": ""
                 });
             }
         }
