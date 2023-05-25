@@ -54,6 +54,7 @@ li {
     border-radius: 4px;
     height: 58px;
     width: 43px;
+    font-weight: 600;
 }
 
 .wordle-keyboard {
